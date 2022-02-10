@@ -5,7 +5,7 @@ module.exports = {
         if(req.isAuthenticated() && req.user.isAdmin == true){
             return next()
         }
-        res.status().json({"message": "not "})
+        return res.status().json({"message": "not "})
 
     }
 }

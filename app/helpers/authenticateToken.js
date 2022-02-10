@@ -6,7 +6,7 @@ function authenticateToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1]
 
     if (token == null) {
-        res.status(403).json({
+        res.status(400).json({
             "message": "token not passed"
         })
     } else {

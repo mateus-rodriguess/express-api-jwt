@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../../models/User")
-const validator = require("email-validator");
 const bcrypt = require("bcryptjs")
 
 const { celebrate, Segments } = require('celebrate');
@@ -15,7 +14,6 @@ router.get("/ok", authenticateToken, (req, res) => {
 })
 
 router.post("/account/register", celebrate({ [Segments.BODY]: registerValidation }), async (req, res) => {
-
     try {
         const user = await User.findOne({ email: req.body.email })
         if (user) {
@@ -34,7 +32,7 @@ router.post("/account/register", celebrate({ [Segments.BODY]: registerValidation
                 } else {
                     newUser.password = hash
                     newUser.save().then(() => {
-                        res.json({ "message": "User created successfully" })
+                        res.status(200).json({ "message": "User created successfully" })
                     })
                 }
             })
@@ -48,14 +46,14 @@ router.post("/account/login", celebrate({ [Segments.BODY]: loginValidation }), a
     try {
         const user = await User.findOne({ email: req.body.email })
         if (!user) {
-            return res.json({ "message": "This account does not exist" })
+            return res.status(400).json({ "message": "This account does not exist" })
         }
         bcrypt.compare(req.body.password, user.password, (error, knock) => {
             if (knock) {
                 const token = generateAccessToken(user.id)
                 res.json({ auth: true, token: token, expiresIn: "1800s" });
             } else {
-                return res.json({ "message": "Invalid credentials" })
+                return res.status(400).json({ "message": "Invalid credentials" })
             }
         })
     } catch {
