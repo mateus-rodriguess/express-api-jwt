@@ -5,14 +5,12 @@ const registerValidation = Joi.object().keys({
     lastName: Joi.string().min(1).max(255).required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(3).max(15).required().label('Password'),
-    password_confirmation: Joi.any().equal(Joi.ref('password'))
-        .required()
-        .label('Confirm password')
+    password_confirmation: Joi.any().equal(Joi.ref('password')).required().label('Confirm password')
         .messages({ 'any.only': '{{#label}} does not match' })
 
 })
 
-const LoginValidation = Joi.object().keys({
+const loginValidation = Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required()
 })
@@ -20,5 +18,5 @@ const LoginValidation = Joi.object().keys({
 
 module.exports = {
     registerValidation,
-    LoginValidation
+    loginValidation
 }

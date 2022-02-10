@@ -10,6 +10,7 @@ function authenticateToken(req, res, next) {
             "message": "token not passed"
         })
     } else {
+        dotenv.config();
         jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
             if (err) {
                 res.status(401).json({

@@ -4,12 +4,16 @@ const mongoose = require('mongoose');
 const session = require("express-session")
 const { errors } = require('celebrate')
 const passport = require("passport")
+const dotenv = require('dotenv');
 // app
 const app = express();
 
-// session
+// 
+dotenv.config();
+
 app.use(session({
-    secret: "secrect",
+    
+    secret: process.env.TOKEN_SECRET,
     resave: true,
     saveUninitialized: true
 }))
