@@ -1,8 +1,8 @@
 var app = require('./config/server');
 
 
-const POSRT = 8080
-app.listen(POSRT, function(){
-    console.log("http://localhost:" + POSRT);
+const PORT = 8080
+app.listen(PORT, function(){
+    console.log("http://localhost:" + PORT);
 });
 
